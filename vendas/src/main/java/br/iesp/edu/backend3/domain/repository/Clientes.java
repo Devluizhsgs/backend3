@@ -11,7 +11,7 @@ import java.util.List;
 public interface Clientes extends JpaRepository<Cliente, Integer> {
 
     @Query(value = "select * from Cliente c where c.nome like '%:nome%'", nativeQuery = true)
-    List<Object> encontrarPorNome(@Param("nome") String nome);
+    List<Cliente> encontrarPorNome(@Param("nome") String nome);
 
     @Query(" delete from Cliente c where c.nome =:nome")
     @Modifying
@@ -19,7 +19,7 @@ public interface Clientes extends JpaRepository<Cliente, Integer> {
 
     boolean existsByNome(String nome);
 
-    @Query(" select c from cliente c left join fetch c.pedidos where c.id = :id")
+    @Query(" select c from Cliente c left join fetch c.pedidos where c.id = :id")
     Cliente findClienteFetchPedido(@Param("id") Integer id);
 
 }

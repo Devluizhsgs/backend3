@@ -1,4 +1,5 @@
 package br.iesp.edu.backend3.domain.entity;
+
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,6 +11,7 @@ public class Pedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne
@@ -19,7 +21,7 @@ public class Pedido {
     @Column(name = "data_pedido")
     private LocalDate datapedido;
 
-    @Column(name = "total", scale = 2, precision = 20)
+    @Column(name = "total", precision = 20, scale = 2)
     private BigDecimal total;
 
     @OneToMany(mappedBy = "pedido")

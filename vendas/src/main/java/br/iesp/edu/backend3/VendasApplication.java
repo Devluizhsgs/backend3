@@ -20,7 +20,8 @@ public class VendasApplication {
     @Bean
     public CommandLineRunner init(
             @Autowired Clientes clientes,
-            @Autowired Pedidos pedidos) {
+            @Autowired Pedidos pedidos
+    ) {
         return args -> {
             System.out.println("Salvando clientes");
             Cliente fulano = new Cliente("Fulano");
@@ -36,6 +37,9 @@ public class VendasApplication {
             Cliente cliente = clientes.findClienteFetchPedido(fulano.getId());
             System.out.println(cliente);
             System.out.println(cliente.getPedidos());
+
+            pedidos.findbyCliente(fulano).forEach(System.out::println);
+
 
 
         };
