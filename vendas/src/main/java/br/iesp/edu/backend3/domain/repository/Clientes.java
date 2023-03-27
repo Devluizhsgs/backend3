@@ -1,4 +1,4 @@
-package br.iesp.edu.backend3.domain.repositorio;
+package br.iesp.edu.backend3.domain.repository;
 
 import br.iesp.edu.backend3.domain.entity.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface Clientes extends JpaRepository<Cliente, Integer> {
 
-
     @Query(value = "select * from Cliente c where c.nome like '%:nome%'", nativeQuery = true)
     List<Object> encontrarPorNome(@Param("nome") String nome);
 
@@ -19,4 +18,8 @@ public interface Clientes extends JpaRepository<Cliente, Integer> {
     void deleteByNome(String nome);
 
     boolean existsByNome(String nome);
+
+    @Query(" select c from cliente c left join fetch c.pedidos where c.id = :id")
+    Cliente findClienteFetchPedido(@Param("id") Integer id);
+
 }
