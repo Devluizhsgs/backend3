@@ -1,6 +1,7 @@
 package br.iesp.edu.backend3.service;
 
 import br.iesp.edu.backend3.Model.UserModel;
+import br.iesp.edu.backend3.TokenDto;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import jakarta.annotation.PostConstruct;
@@ -18,8 +19,8 @@ public class TokenService {
     @Value("${security.jwt.token.secret-key:secret}")
     private String secretKey = "secret";
 
-    @Value("${security.jwt.token.expire-length:3600000}")
-    private long validityInMilliseconds = 3600000; // 1h
+    @Value("${security.jwt.token.expire-length:30}")
+    private long validityInMilliseconds = 30;
 
     Algorithm algorithm = null;
 
@@ -28,22 +29,6 @@ public class TokenService {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
         algorithm = Algorithm.HMAC256(secretKey.getBytes());
     }
-
-    //public String gerarToken(UserModel usuario){
-
-//        return JWT.create()
-//                .withClaim("roles", usuario.getRoles().stream()
-//                        .map( u -> u.getRoleName().toString())
-//                        .toList())
-//                .withSubject(usuario.getUsername())
-//                .withIssuer("alunoOline")
-//                .withExpiresAt(Date.from(LocalDateTime.now()
-//                        .plusMinutes(10)
-//                        .toInstant(ZoneOffset.of("-03:00"))))
-//                .sign(Algorithm.HMAC256("secreta"));
-
-    // }
-
     public TokenDto gerarToken(UserModel usuario) {
 
         List<String> roles = usuario.getRoles().stream()
@@ -85,16 +70,4 @@ public class TokenService {
         return JWT.require(Algorithm.HMAC256(secretKey.getBytes()))
                 .build().verify(token).getSubject();
     }
-
-//    public TokenDto refreshToken(String refreshToken) {
-//        if (refreshToken.contains("Bearer ")) refreshToken =
-//                refreshToken.substring("Bearer ".length());
-//
-//        JWTVerifier verifier = JWT.require(algorithm).build();
-//        DecodedJWT decodedJWT = verifier.verify(refreshToken);
-//        String username = decodedJWT.getSubject();
-//        List<String> roles = decodedJWT.getClaim("roles").asList(String.class);
-//        return gerarToken(username, roles);
-//    }
-
 }

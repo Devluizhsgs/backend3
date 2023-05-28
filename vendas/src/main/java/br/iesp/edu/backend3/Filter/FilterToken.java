@@ -1,5 +1,6 @@
 package br.iesp.edu.backend3.Filter;
 
+import br.iesp.edu.backend3.service.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
