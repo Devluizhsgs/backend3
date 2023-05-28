@@ -1,0 +1,25 @@
+security:
+  jwt:
+    token:
+      secret-key: YSBsZW1icmUgw6kgYnJhbmNh
+      expire-length: 30
+spring:
+  flyway:
+    baselineOnMigrate: true
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/vendas?useTimezone=true&serverTimezone=UTC
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+      show-sql: false
+springdoc:
+  pathsToMatch:
+    - /auth/**
+  swagger-ui:
+    use-root-path: true
